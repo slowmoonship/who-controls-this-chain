@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+vendor/
+
+# Node
+web/node_modules/
+web/dist/
+web/public/data/
+
+# OS / editor
+.DS_Store
+
+# Raw research captures (analysis inputs; notes live in docs/research-notes.md)
+research/

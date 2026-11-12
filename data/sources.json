@@ -1,0 +1,158 @@
+{
+  "updated_at": "2026-11-12",
+  "note": "Evidence registry. Every key figure on the site maps to one of these sources. Live endpoints are re-queried by the collector; code/doc links are stable references verified on the date above.",
+  "avalanche": [
+    {
+      "id": "avax-pchain-validators",
+      "label": "platform.getCurrentValidators — Primary Network validator set, stake weight (incl. delegations), uptime",
+      "url": "https://api.avax.network/ext/bc/P",
+      "kind": "rpc",
+      "method": "POST JSON-RPC",
+      "verified": "2026-11-12"
+    },
+    {
+      "id": "avax-pchain-height",
+      "label": "platform.getHeight — P-Chain height at collection time",
+      "url": "https://api.avax.network/ext/bc/P",
+      "kind": "rpc",
+      "verified": "2026-11-12"
+    },
+    {
+      "id": "avalanchego-upgrade",
+      "label": "avalanchego upgrade/upgrade.go — named network upgrades with compiled activation timestamps (Apricot..Helicon). Proof that upgrades ship in client software, not via an admin key.",
+      "url": "https://github.com/ava-labs/avalanchego/blob/master/upgrade/upgrade.go",
+      "kind": "code",
+      "verified": "2026-11-12"
+    },
+    {
+      "id": "avalanchego-releases",
+      "label": "avalanchego releases — validator operators adopt new binaries",
+      "url": "https://github.com/ava-labs/avalanchego/releases",
+      "kind": "code",
+      "verified": "2026-11-12"
+    }
+  ],
+  "polygon": [
+    {
+      "id": "heimdall-validators-set",
+      "label": "Heimdall v2 REST /stake/validators-set — current active validator set + total voting power (CometBFT)",
+      "url": "https://heimdall-api.polygon.technology/stake/validators-set",
+      "kind": "rest",
+      "verified": "2026-11-12"
+    },
+    {
+      "id": "heimdall-span-latest",
+      "label": "Heimdall v2 REST /bor/spans/latest — current span: block range, validator set, selected producers",
+      "url": "https://heimdall-api.polygon.technology/bor/spans/latest",
+      "kind": "rest",
+      "verified": "2026-11-12"
+    },
+    {
+      "id": "heimdall-spans-by-id",
+      "label": "Heimdall v2 REST /bor/spans/{id} — per-span producer history (rotation evidence)",
+      "url": "https://heimdall-api.polygon.technology/bor/spans/15428",
+      "kind": "rest",
+      "verified": "2026-11-12"
+    },
+    {
+      "id": "heimdall-bor-params",
+      "label": "Heimdall v2 REST /bor/params — sprint_duration=16, span_duration=6400, producer_count=50 (legacy selection param)",
+      "url": "https://heimdall-api.polygon.technology/bor/params",
+      "kind": "rest",
+      "verified": "2026-11-12"
+    },
+    {
+      "id": "heimdall-producer-votes",
+      "label": "Heimdall v2 REST /bor/producer-votes — validator votes for block producers (veBlop)",
+      "url": "https://heimdall-api.polygon.technology/bor/producer-votes",
+      "kind": "rest",
+      "verified": "2026-11-12"
+    },
+    {
+      "id": "heimdall-chainmanager",
+      "label": "Heimdall v2 REST /chainmanager/params — canonical L1 contract addresses used by the chain itself",
+      "url": "https://heimdall-api.polygon.technology/chainmanager/params",
+      "kind": "rest",
+      "verified": "2026-11-12"
+    },
+    {
+      "id": "bor-rpc",
+      "label": "Bor JSON-RPC bor_getCurrentValidators / bor_getSigners / bor_getAuthor — execution-layer cross-check of the span producer",
+      "url": "https://polygon-bor-rpc.publicnode.com",
+      "kind": "rpc",
+      "verified": "2026-11-12"
+    },
+    {
+      "id": "heimdall-v2-veblop",
+      "label": "heimdall-v2 x/bor/keeper/veblop.go — veBlop producer election: stake-weighted positional vote tally (CalculateProducerSet), round-robin SelectProducer, single producer frozen per span, client-side fallback list '91,92,93,94' (helper/config.go)",
+      "url": "https://github.com/0xPolygon/heimdall-v2/blob/master/x/bor/keeper/veblop.go",
+      "kind": "code",
+      "verified": "2026-11-12"
+    },
+    {
+      "id": "heimdall-v2-hardforks",
+      "label": "heimdall-v2 helper/config.go — named hardfork heights compiled into heimdalld (mainnet: phuket 44,070,000 / zurich 47,880,000 / ithaca 50,185,000 / kyoto 51,533,000 / lugano 54,627,000 / karwar 57,006,000)",
+      "url": "https://github.com/0xPolygon/heimdall-v2/blob/master/helper/config.go",
+      "kind": "code",
+      "verified": "2026-11-12"
+    },
+    {
+      "id": "heimdall-v2-gov-authority",
+      "label": "heimdall-v2 app.go + x/bor msg_server.go — module params (MsgUpdateParams) gated by the x/gov module account authority",
+      "url": "https://github.com/0xPolygon/heimdall-v2/blob/master/app/app.go",
+      "kind": "code",
+      "verified": "2026-11-12"
+    },
+    {
+      "id": "eth-l1-contracts",
+      "label": "Ethereum mainnet on-chain reads: proxy slots keccak256('matic.network.proxy.implementation/owner'), Gnosis Safe getThreshold/getOwners, TimelockController getMinDelay/hasRole. Collector re-verifies every run.",
+      "url": "https://etherscan.io/address/0x5e3ef299fddf15eaa0432e6e66473ace8c13d908",
+      "kind": "rpc",
+      "verified": "2026-11-12"
+    },
+    {
+      "id": "stakemanager-proxy-source",
+      "label": "StakeManagerProxy.sol verified source (UpgradableProxy with matic.network slots, updateImplementation = owner-gated upgrade)",
+      "url": "https://etherscan.io/address/0x5e3ef299fddf15eaa0432e6e66473ace8c13d908#code",
+      "kind": "code",
+      "verified": "2026-11-12"
+    },
+    {
+      "id": "safe-multisig",
+      "label": "Gnosis Safe 5-of-9 (owner of StakingInfo/StateSender/SlashManager; PROPOSER+EXECUTOR on the timelock)",
+      "url": "https://etherscan.io/address/0xfa7d2a996ac6350f4b56c043112da0366a59b74c",
+      "kind": "rpc",
+      "verified": "2026-11-12"
+    },
+    {
+      "id": "timelock",
+      "label": "TimelockController (owner of StakeManagerProxy/RootChainProxy). getMinDelay() = 0 seconds as of 2026-11-12.",
+      "url": "https://etherscan.io/address/0xcaf0aa768a3ae1297df20072419db8bb8b5c8cef",
+      "kind": "rpc",
+      "verified": "2026-11-12"
+    },
+    {
+      "id": "polygon-staking-api",
+      "label": "staking-api.polygon.technology /api/v3/validators/{id} — operator-declared validator names (display only; never used to merge entities)",
+      "url": "https://staking-api.polygon.technology/api/v3/validators/91",
+      "kind": "rest",
+      "verified": "2026-11-12"
+    }
+  ],
+  "methodology_refs": [
+    {
+      "id": "cometbft-thresholds",
+      "label": "CometBFT security model: >1/3 of voting power can halt finality; >2/3 can finalize conflicting blocks",
+      "url": "https://docs.cometbft.com/v1/explanation/core/consensus",
+      "kind": "doc",
+      "verified": "2026-11-12"
+    },
+    {
+      "id": "snow-whitepaper",
+      "label": "Team Rocket, 'Scalable and Probabilistic Leaderless BFT Consensus through Metastability' (Snow/Snowball/Snowman analysis) — probabilistic safety; thresholds not directly comparable to BFT quorums",
+      "url": "https://www.avalabs.org/whitepapers",
+      "kind": "doc",
+      "verified": "2026-11-12"
+    }
+  ]
+}

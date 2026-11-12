@@ -1,0 +1,54 @@
+{
+  "updated_at": "2026-11-12",
+  "metrics": {
+    "active_validators": {
+      "definition": "Number of validators currently in the active set of the network's consensus layer.",
+      "avalanche": "platform.getCurrentValidators result length (Primary Network; the returned 'weight' already includes delegated stake — delegatorWeight is a subset, never added on top).",
+      "polygon_pos": "Heimdall v2 /stake/validators-set validator count (CometBFT active set).",
+      "limits": "Counts validator records, not independent organizations. One entity may run several validators; one validator may be operated by a third party (e.g. exchange staking products)."
+    },
+    "top10_share": {
+      "definition": "Sum of the 10 largest stake weights divided by total active weight.",
+      "formula": "sum(sort_desc(weight)[0:10]) / sum(weight)",
+      "avalanche_unit": "nAVAX (weight incl. delegations)",
+      "polygon_pos_unit": "Heimdall voting power (= staked POL / 10^15, verified against staking-api totals)",
+      "limits": "Weight share ≠ organization share. Same caveat as active_validators."
+    },
+    "max_share": {
+      "definition": "Largest single validator's share of total active weight.",
+      "formula": "max(weight) / sum(weight)"
+    },
+    "nakamoto_concentration": {
+      "definition": "Minimum number of the largest validators whose combined weight reaches a threshold of total weight. Reported at 33% and 50%.",
+      "formula": "min n such that sum(sort_desc(weight)[0:n]) / sum(weight) >= threshold",
+      "thresholds": {"n_33": 0.33, "n_50": 0.5},
+      "what_it_shows": "How few validators dominate the stake-weight distribution.",
+      "what_it_does_not_show": "It is NOT an attack-cost estimate and NOT a universal attack threshold. Different consensus models convert weight control into concrete capabilities differently.",
+      "polygon_pos_reading": "Heimdall runs CometBFT: >1/3 of voting power can halt checkpoint/milestone finality; >2/3 can finalize arbitrary conflicting state at the consensus layer. Bor block production is a separate control (see block_producers).",
+      "avalanche_reading": "Snowman-family consensus is probabilistic/metastable with stake-sampled leaders; published analysis bounds safety probabilistically (Snow whitepaper). 33%/50% figures are labeled concentration statistics only."
+    },
+    "block_producers": {
+      "definition": "Validators that actually produce execution-layer blocks in the current window.",
+      "polygon_pos": "Heimdall 'veBlop': validator votes (stake-weighted positional tally) elect a candidate pool (limit 4 since the SetProducerDowntime hardfork); each Bor span (6400 blocks) freezes exactly ONE producer, rotating round-robin over the pool. Observed producers are read from /bor/spans/{id} — never hardcoded. If the vote map is empty the heimdalld client falls back to a compiled-in list (currently '91,92,93,94').",
+      "avalanche": "Different consensus model: no fixed producer set. C-Chain/P-Chain blocks are proposed by stake-sampled leaders (Snowman++ proposer-VM); every validator can propose in proportion to its weight. Not directly comparable to Bor spans.",
+      "limits": "A Bor producer orders/censors transactions within its span (~3.6 h); it cannot alone finalize history (Heimdall checkpoints/milestones need 2/3+ voting power), change protocol rules, or move user funds. The span producer set is per-span, not a permanent list of the only validators that can ever produce blocks."
+    },
+    "protocol_upgrade_control": {
+      "definition": "Who can change consensus rules / contract logic, through which mechanism.",
+      "polygon_pos": "Three layers: (1) L1 contracts (StakeManager/RootChain) are UpgradableProxies whose owner is a TimelockController; the timelock's PROPOSER+EXECUTOR is a Gnosis Safe with threshold 5-of-9, and getMinDelay() was 0 s on 2026-11-12 — 5 of 9 signers can upgrade staking/checkpoint contract logic with no waiting period. StakingInfo/StateSender/SlashManager are directly owned by the same Safe. (2) Heimdall module params require the x/gov authority (validator-weighted voting). (3) heimdalld hardfork heights are compiled into client binaries and activate when validators adopt the release.",
+      "avalanche": "No on-chain admin key for Primary Network consensus rules. Named upgrades (Apricot..Helicon) activate at timestamps compiled into avalanchego; validators must adopt new client software. Control concentrates in client development and release coordination (Ava Labs) plus validator adoption — not in a multisig. 'No multisig' does not mean 'no centralization risk'.",
+      "limits": "Contract upgrade authority is not a key over user wallets, and multisig membership counts are addresses, not verified real-world identities. Software-upgrade influence is social/technical, not an on-chain threshold."
+    },
+    "entity_concentration": {
+      "definition": "Concentration after mapping validators to operating entities.",
+      "status": "Unknown / not reliably identifiable",
+      "reason": "No authoritative validator→entity registry exists for either network. Operator-declared names (Polygon staking API) are display-only and cannot be used to merge validators (names can be duplicated, renamed, or false). Address or name similarity is not evidence of common control. If a reliable mapping is ever published, this metric can be added."
+    }
+  },
+  "data_quality": {
+    "update_cadence": "Every 6 hours via GitHub Actions (scheduled runs are best-effort; GitHub does not guarantee exact timing).",
+    "failure_policy": "A failed collection never overwrites the last valid snapshot. The page shows the age of the data and any collection errors.",
+    "anomaly_policy": "Validator count or total weight moving >50% between snapshots is flagged as a suspected data anomaly: recorded in history but not promoted to the official latest stats.",
+    "reproducibility": "Every snapshot stores the sorted weight vector it was computed from, the chain heights, and the endpoint list, so all shares and concentration counts can be recomputed independently."
+  }
+}
