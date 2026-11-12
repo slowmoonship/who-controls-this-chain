@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-12T00:48:51Z",
+  "generated_at": "2026-11-12T00:53:15Z",
   "status": "ok",
   "warnings": [],
   "networks": {
@@ -8,13 +8,13 @@
       "network": "avalanche",
       "name": "Avalanche Primary Network",
       "chain_heights": {
-        "p_chain_height": "25850145"
+        "p_chain_height": "25850178"
       },
       "metrics": {
         "active_validators": 542,
         "total_weight": "153225311366270388",
         "weight_unit": "nAVAX",
-        "delegated_weight": "42094246626902978",
+        "delegated_weight": "42081055351479770",
         "top10_share": 0.19063,
         "max_share": 0.019579,
         "nakamoto": {
@@ -77,7 +77,7 @@
           "weight": "2927902539936947",
           "delegator_weight": "0",
           "share": 0.019108,
-          "uptime": "99.8856"
+          "uptime": "99.8857"
         },
         {
           "node_id": "NodeID-7ZqQjoKjWR1esHETZQAqdo8EnC72iu9Gh",
@@ -91,7 +91,7 @@
           "weight": "2700000000000000",
           "delegator_weight": "266797877230968",
           "share": 0.017621,
-          "uptime": "41.6696"
+          "uptime": "41.6644"
         }
       ],
       "weights_sorted_desc": [
@@ -664,7 +664,7 @@
       "network": "polygon_pos",
       "name": "Polygon PoS (Heimdall v2 + Bor)",
       "chain_heights": {
-        "heimdall_height": "57679171"
+        "heimdall_height": "57679412"
       },
       "heimdall": {
         "active_validators": 100,
@@ -1551,7 +1551,7 @@
         },
         "block_coverage_n_50": 2,
         "bor_crosscheck": {
-          "bor_block": "97159408",
+          "bor_block": "97159566",
           "bor_getCurrentValidators": [
             {
               "signer": "0x264379c47e653dafa153841a995cf975b6a02ed7",
