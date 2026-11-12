@@ -2,6 +2,8 @@
 
 *Who really controls the blockchain?*
 
+**Live: https://slowmoonship.github.io/who-controls-this-chain/**
+
 An open-source, auto-updating visualization of **how power is actually distributed** on two
 networks — **Avalanche Primary Network** and **Polygon PoS (Heimdall v2 + Bor)** — with every
 figure traceable to a public endpoint, contract, or code reference.
