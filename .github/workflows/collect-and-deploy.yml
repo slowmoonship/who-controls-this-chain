@@ -60,6 +60,10 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Branch tip, not the event SHA: the collect job may have just pushed
+          # a fresh data commit that must be part of this build.
+          ref: main
 
       - uses: actions/setup-node@v4
         with:
