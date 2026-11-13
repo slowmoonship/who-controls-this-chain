@@ -117,5 +117,22 @@
       "span_id": 15440,
       "producers": 1
     }
+  },
+  {
+    "file": "20261113T195240Z.json",
+    "t": "2026-11-13T19:52:40Z",
+    "status": "ok",
+    "avalanche": {
+      "active_validators": 607,
+      "top10_share": 0.167861,
+      "n_33": 24
+    },
+    "polygon_pos": {
+      "active_validators": 100,
+      "top10_share": 0.663634,
+      "n_33": 4,
+      "span_id": 15445,
+      "producers": 1
+    }
   }
 ]
