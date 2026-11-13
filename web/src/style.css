@@ -23,27 +23,7 @@
   --status-warning: #fab219;
   --status-critical: #d03b3b;
   --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    color-scheme: dark;
-    --page: #0d0d0d;
-    --surface-1: #1a1a19;
-    --text-primary: #f0efec;
-    --text-secondary: #c3c2b7;
-    --text-muted: #898781;
-    --gridline: #2c2c2a;
-    --baseline: #383835;
-    --border: rgba(255, 255, 255, 0.1);
-    --accent: #d95926;
-    --accent-deep: #eb6834;
-    --series-1: #3987e5;
-    --dot-none: #383835;
-    --dot-top10: #3987e5;
-    --dot-pool: #a8451f;
-    --dot-producer: #d95926;
-  }
+  --bar-cool: #6d88a8;
 }
 
 * {
@@ -63,9 +43,9 @@ body {
 }
 
 #app {
-  max-width: 1160px;
+  max-width: 820px;
   margin: 0 auto;
-  padding: 28px 24px 64px;
+  padding: 36px 28px 28px;
 }
 
 a {
@@ -91,17 +71,179 @@ a:hover {
   gap: 16px;
 }
 
+.header-group {
+  min-width: 0;
+}
+
 .site-title {
-  font-size: 26px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
+  font-size: 28px;
+  font-weight: 650;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
   margin: 0;
 }
 
 .site-subtitle {
-  margin: 2px 0 0;
+  margin: 6px 0 0;
   color: var(--text-secondary);
   font-size: 15px;
+}
+
+.conclusion {
+  margin: 32px 0 0;
+  font-size: 26px;
+  font-weight: 650;
+  line-height: 1.25;
+  letter-spacing: -0.03em;
+  max-width: 18em;
+}
+
+.conclusion-scope {
+  margin: 8px 0 0;
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.45;
+  max-width: 46em;
+}
+
+.bars-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  margin: 28px 0 12px;
+}
+
+.bars-label {
+  font-size: 15px;
+  font-weight: 650;
+}
+
+.bars-scale {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.bars {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 0 0 28px;
+}
+
+.bar-row {
+  display: grid;
+  grid-template-columns: 132px minmax(0, 1fr) 72px;
+  align-items: center;
+  gap: 14px;
+}
+
+.bar-name {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.bar-track {
+  height: 14px;
+  background: var(--gridline);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  display: block;
+  height: 100%;
+  border-radius: 99px;
+  background: var(--bar-cool);
+}
+
+.bar-fill.higher {
+  background: var(--accent);
+}
+
+.bar-value {
+  font-size: 22px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  text-align: right;
+}
+
+.home-table {
+  table-layout: fixed;
+  font-size: 14.5px;
+}
+
+.home-table th,
+.home-table td {
+  padding: 11px 16px 11px 0;
+  overflow-wrap: anywhere;
+}
+
+.home-table .col-metric {
+  width: 30%;
+}
+
+.home-table .col-chain {
+  width: 35%;
+}
+
+.home-table .row-label {
+  font-weight: 600;
+}
+
+.evidence {
+  margin-top: 4px;
+  border-top: 1px solid var(--gridline);
+  padding-top: 12px;
+}
+
+.evidence > summary {
+  cursor: pointer;
+  color: var(--text-primary);
+  font-size: 15px;
+  width: fit-content;
+  list-style: none;
+}
+
+.evidence > summary::-webkit-details-marker {
+  display: none;
+}
+
+.evidence > summary::after {
+  content: " ↓";
+  color: var(--text-muted);
+}
+
+.evidence[open] > summary::after {
+  content: " ↑";
+}
+
+.evidence-body {
+  margin-top: 4px;
+}
+
+.evidence-layer {
+  border-top: 1px solid var(--gridline);
+  padding: 10px 0;
+}
+
+.evidence-layer > summary {
+  cursor: pointer;
+  font-size: 14.5px;
+  font-weight: 600;
+  width: fit-content;
+}
+
+.evidence-layer-body {
+  padding-top: 12px;
+}
+
+.updated-line {
+  margin: 18px 0 0;
+  font-size: 12.5px;
+  color: var(--text-muted);
 }
 
 .tagline {
@@ -110,14 +252,36 @@ a:hover {
   max-width: 62ch;
 }
 
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.icon-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  color: var(--text-secondary);
+  text-decoration: none;
+}
+
+.icon-link:hover {
+  color: var(--text-primary);
+}
+
 .lang-btn {
   border: 1px solid var(--border);
-  background: var(--surface-1);
-  color: var(--text-primary);
+  background: transparent;
+  color: var(--text-secondary);
   border-radius: 999px;
-  padding: 5px 14px;
-  font-size: 13px;
+  padding: 4px 10px;
+  font-size: 12px;
   cursor: pointer;
+  margin-left: 6px;
 }
 
 .lang-btn:hover {
@@ -273,6 +437,48 @@ a:hover {
 .span-range {
   font-family: var(--mono);
   font-size: 11.5px;
+}
+
+.rotation {
+  margin: 4px 0 10px;
+}
+
+.rotation-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.rot-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 3px 6px 4px;
+  font-family: var(--mono);
+  line-height: 1.15;
+  min-width: 42px;
+}
+
+.rot-chip.current {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+}
+
+.rot-span {
+  font-size: 9px;
+  color: var(--text-muted);
+}
+
+.rot-who {
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.rot-chip.current .rot-who {
+  color: var(--accent-deep);
 }
 
 .grid-wrap {
@@ -686,11 +892,41 @@ a:hover {
 
 @media (max-width: 520px) {
   #app {
-    padding: 18px 14px 48px;
+    padding: 20px 16px 28px;
   }
 
   .hero-big {
     font-size: 34px;
+  }
+
+  .site-title {
+    font-size: 22px;
+  }
+
+  .conclusion {
+    font-size: 22px;
+    margin-top: 24px;
+  }
+
+  .bars-head {
+    margin-top: 22px;
+  }
+
+  .bar-row {
+    grid-template-columns: 96px minmax(0, 1fr) 58px;
+    gap: 8px;
+  }
+
+  .bar-name {
+    font-size: 13px;
+  }
+
+  .bar-value {
+    font-size: 18px;
+  }
+
+  .bar-track {
+    height: 12px;
   }
 
   .stat-row {
@@ -698,12 +934,17 @@ a:hover {
   }
 
   .cmp-table {
-    font-size: 12.5px;
+    font-size: 13px;
   }
 
   .cmp-table th,
   .cmp-table td {
-    padding: 7px 6px;
+    padding: 8px 8px 8px 0;
+  }
+
+  .cmp-table.home-table {
+    table-layout: fixed;
+    font-size: 13.5px;
   }
 
   .hist-row {

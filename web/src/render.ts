@@ -7,6 +7,20 @@ import { t, type Lang } from "./i18n";
 import { ageText, num, pct, shortAddr, utcTime } from "./format";
 import type { SiteData, Snapshot, ValidatorRow } from "./types";
 
+const GITHUB_URL = "https://github.com/slowmoonship";
+const X_URL = "https://x.com/slowmoonship";
+
+interface ChainView {
+  id: string;
+  name: string;
+  shortName: string;
+  validators: number;
+  top10: number;
+  n33: number;
+  selection: string;
+  upgrade: string;
+}
+
 interface SourceEntry {
   id: string;
   label: string;
@@ -115,6 +129,56 @@ function legendItem(cls: string, label: string): HTMLElement {
   const dot = el("span", `legend-dot ${cls}`);
   li.append(dot, document.createTextNode(label));
   return li;
+}
+
+function renderSpanRotation(panel: HTMLElement, data: SiteData): void {
+  const px = data.latest.networks.polygon_pos;
+  if (!px) return;
+  const bor = px.bor;
+  const spans = [...bor.recent_spans].reverse();
+  if (!spans.length) return;
+
+  const names = new Map<string, string>();
+  for (const row of px.validators_all ?? px.top10) {
+    if (row.val_id && row.name) names.set(row.val_id, row.name);
+  }
+
+  const wrap = el("div", "rotation");
+  wrap.append(el("div", "stat-label", t("rotationTitle")));
+  const row = el("div", "rotation-row");
+  const currentId = bor.current_span.id;
+  for (const span of spans) {
+    const ids = span.producers.map((p) => p.val_id).filter(Boolean);
+    const chip = el("span", span.id === currentId ? "rot-chip current" : "rot-chip");
+    if (span.id === currentId) chip.setAttribute("aria-current", "true");
+    chip.append(el("span", "rot-span", `#${span.id}`), el("span", "rot-who", ids.join("+") || "—"));
+    const who = ids
+      .map((id) => (names.get(id) ? `${id} ${names.get(id)}` : id))
+      .join(", ");
+    chip.title = `span #${span.id} · ${who} · blocks ${num(span.start_block)}–${num(span.end_block)}`;
+    row.append(chip);
+  }
+  wrap.append(row);
+
+  const distinct = new Set(spans.flatMap((s) => s.producers.map((p) => p.val_id).filter(Boolean)));
+  wrap.append(
+    el(
+      "p",
+      "fine-print",
+      t("rotationSummary", { spans: spans.length, distinct: distinct.size })
+    )
+  );
+  bindExplain(wrap, () =>
+    explainFrom(
+      "rowBlockProd",
+      "mBlockWhat",
+      "mBlockHow",
+      "mBlockLimits",
+      [srcById(data, "heimdall-spans-by-id"), srcById(data, "heimdall-v2-veblop")].filter(Boolean) as SourceEntry[],
+      data.latest.generated_at
+    )
+  );
+  panel.append(wrap);
 }
 
 function renderPolygonPanel(panel: HTMLElement, data: SiteData): void {
@@ -227,11 +291,14 @@ function renderPolygonPanel(panel: HTMLElement, data: SiteData): void {
       "fine-print",
       t("producerRatio", {
         n: nProd,
+        total: h.active_validators,
         share: pct(nProd / h.active_validators),
         span: bor.current_span.id,
       })
     )
   );
+
+  renderSpanRotation(panel, data);
 
   const gridWrap = el("div", "grid-wrap");
   gridWrap.dataset["aria"] = "Polygon PoS validators, one dot each";
@@ -378,14 +445,15 @@ function renderTable(section: HTMLElement, data: SiteData): void {
     a: string,
     p: string,
     sub: string | null,
-    explain: () => ExplainContent
+    explain: () => ExplainContent,
+    accent = true
   ) => {
     const tr = el("tr");
     const th = el("th", "row-label", label);
     const tdA = el("td");
     tdA.append(el("span", "cell-main", a));
     const tdP = el("td");
-    tdP.append(el("span", "cell-main accent-text", p));
+    tdP.append(el("span", accent ? "cell-main accent-text" : "cell-main", p));
     if (sub) {
       const s = el("div", "cell-sub", sub);
       tdP.append(s);
@@ -458,6 +526,21 @@ function renderTable(section: HTMLElement, data: SiteData): void {
     ncExplain
   );
   row(
+    t("rowEntity"),
+    t("entityUnknown"),
+    t("entityUnknown"),
+    null,
+    () => ({
+      title: t("rowEntity"),
+      what: t("mEntityWhat"),
+      how: t("mEntityHow"),
+      sources: [{ label: "methodology.json", url: "./data/methodology.json" }],
+      limits: t("mEntityLimits"),
+      verified,
+    }),
+    false
+  );
+  row(
     t("rowBlockProd"),
     t("blockProdAvalanche"),
     t("blockProdPolygon", { pool: String(px.bor.vote_tally_top.length || px.bor.producer_set_limit) }),
@@ -497,9 +580,21 @@ function renderTable(section: HTMLElement, data: SiteData): void {
 
 function renderRules(section: HTMLElement, data: SiteData): void {
   const snap = data.latest;
+  const av = snap.networks.avalanche;
   const px = snap.networks.polygon_pos;
   const safe = snap.networks.authority?.polygon_l1.safe;
-  const poolSize = px ? px.bor.vote_tally_top.length || px.bor.producer_set_limit : 4;
+  const timelock = snap.networks.authority?.polygon_l1.timelock;
+  const poolSize = px ? px.bor.vote_tally_top.length || px.bor.producer_set_limit : 0;
+  const nProd = px ? px.bor.current_span.producers.length : 0;
+  const avN = av ? num(av.metrics.active_validators) : "—";
+  const pxN = px ? num(px.heimdall.active_validators) : "—";
+  const avTop = av ? pct(av.metrics.top10_share) : "—";
+  const pxTop = px ? pct(px.heimdall.top10_share) : "—";
+  const n33 = px ? num(px.heimdall.nakamoto.n_33) : "—";
+  const n50 = px ? num(px.heimdall.nakamoto.n_50) : "—";
+  const threshold = safe?.threshold ?? "—";
+  const owners = safe?.owners_count ?? "—";
+  const delay = timelock?.min_delay_seconds ?? "—";
 
   section.append(el("h2", "section-title", t("rulesTitle")));
   section.append(el("p", "section-sub", t("rulesSub")));
@@ -532,16 +627,16 @@ function renderRules(section: HTMLElement, data: SiteData): void {
   row.append(
     cell(
       "AVALANCHE",
-      t("rcAvalanche"),
-      t("rcAvalancheRisk"),
+      t("rcAvalanche", { n: avN }),
+      t("rcAvalancheRisk", { top10: avTop }),
       [srcById(data, "avax-pchain-validators")].filter(Boolean) as SourceEntry[]
     )
   );
   row.append(
     cell(
       "POLYGON PoS",
-      t("rcPolygon"),
-      t("rcPolygonRisk"),
+      t("rcPolygon", { n: pxN, top10: pxTop }),
+      t("rcPolygonRisk", { n33, n50 }),
       [srcById(data, "heimdall-validators-set"), srcById(data, "cometbft-thresholds")].filter(Boolean) as SourceEntry[]
     )
   );
@@ -561,7 +656,7 @@ function renderRules(section: HTMLElement, data: SiteData): void {
     cell(
       "POLYGON PoS",
       t("bpPolygon", { pool: String(poolSize) }),
-      t("bpPolygonRisk"),
+      t("bpPolygonRisk", { n: nProd, total: pxN }),
       [srcById(data, "heimdall-v2-veblop"), srcById(data, "bor-rpc")].filter(Boolean) as SourceEntry[]
     )
   );
@@ -580,7 +675,7 @@ function renderRules(section: HTMLElement, data: SiteData): void {
   row3.append(
     cell(
       "POLYGON PoS",
-      t("puPolygon"),
+      t("puPolygon", { threshold, owners, delay }),
       t("puPolygonRisk"),
       [
         srcById(data, "timelock"),
@@ -663,6 +758,202 @@ function renderSources(section: HTMLElement, data: SiteData): void {
   section.append(list);
 }
 
+/* ---------------- home ---------------- */
+
+function chainViews(snap: Snapshot): ChainView[] {
+  const out: ChainView[] = [];
+  const av = snap.networks.avalanche;
+  if (av) {
+    out.push({
+      id: "avalanche",
+      name: "Avalanche",
+      shortName: "Avalanche",
+      validators: av.metrics.active_validators,
+      top10: av.metrics.top10_share,
+      n33: av.metrics.nakamoto.n_33,
+      selection: t("selectAvalanche"),
+      upgrade: t("upgradeHomeAvalanche"),
+    });
+  }
+  const px = snap.networks.polygon_pos;
+  if (px) {
+    const safe = snap.networks.authority?.polygon_l1.safe;
+    const delay = snap.networks.authority?.polygon_l1.timelock.min_delay_seconds;
+    const pool = px.bor.vote_tally_top.length || px.bor.producer_set_limit;
+    const upgrade =
+      safe?.threshold != null && safe.owners_count != null && delay != null
+        ? t("upgradeHomePolygon", {
+            threshold: safe.threshold,
+            owners: safe.owners_count,
+            delay,
+          })
+        : "—";
+    out.push({
+      id: "polygon_pos",
+      name: "Polygon PoS",
+      shortName: "Polygon",
+      validators: px.heimdall.active_validators,
+      top10: px.heimdall.top10_share,
+      n33: px.heimdall.nakamoto.n_33,
+      selection: t("selectPolygon", { pool }),
+      upgrade,
+    });
+  }
+  return out;
+}
+
+function conclusionText(views: ChainView[]): string {
+  if (views.length === 0) return "";
+  const ranked = [...views].sort((a, b) => b.top10 - a.top10);
+  const hi = ranked[0];
+  const lo = ranked[ranked.length - 1];
+  if (views.length < 2) return `${hi.shortName} · ${t("rowTop10")} ${pct(hi.top10)}`;
+  if (hi.top10 === lo.top10) return t("conclusionTie", { share: pct(hi.top10) });
+  // A few points of stake share is not a stronger-control claim.
+  if (hi.top10 - lo.top10 < 0.05) {
+    return t("conclusionClose", {
+      chain: hi.shortName,
+      share: pct(hi.top10),
+      other: lo.shortName,
+      otherShare: pct(lo.top10),
+    });
+  }
+  return t("conclusionLead", { chain: hi.shortName });
+}
+
+function iconLink(href: string, label: string, viewBox: string, path: string): HTMLAnchorElement {
+  const a = el("a", "icon-link");
+  a.href = href;
+  a.target = "_blank";
+  a.rel = "noopener noreferrer";
+  a.setAttribute("aria-label", label);
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svg.setAttribute("viewBox", viewBox);
+  svg.setAttribute("width", "15");
+  svg.setAttribute("height", "15");
+  svg.setAttribute("aria-hidden", "true");
+  const p = document.createElementNS("http://www.w3.org/2000/svg", "path");
+  p.setAttribute("fill", "currentColor");
+  p.setAttribute("d", path);
+  svg.append(p);
+  a.append(svg);
+  return a;
+}
+
+const GITHUB_PATH =
+  "M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z";
+const X_PATH =
+  "M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.401-7.046-6.18 7.046H2.033l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z";
+
+function renderHomeTable(parent: HTMLElement, data: SiteData, views: ChainView[]): void {
+  const verified = data.latest.generated_at;
+  const both = [
+    srcById(data, "avax-pchain-validators"),
+    srcById(data, "heimdall-validators-set"),
+  ].filter(Boolean) as SourceEntry[];
+  const table = el("table", "cmp-table home-table");
+  const head = el("tr");
+  head.append(el("th", "col-metric", t("metric")));
+  for (const view of views) head.append(el("th", "col-chain", view.name));
+  const thead = el("thead");
+  thead.append(head);
+  const tbody = el("tbody");
+
+  const add = (
+    label: string,
+    values: string[],
+    explain: () => ExplainContent,
+    note?: string
+  ) => {
+    const tr = el("tr");
+    const th = el("th", "row-label");
+    th.append(document.createTextNode(label));
+    if (note) th.append(el("div", "cell-sub", note));
+    tr.append(th);
+    for (const value of values) tr.append(el("td", "", value));
+    bindExplain(tr, explain);
+    tbody.append(tr);
+  };
+
+  add(
+    t("rowValidators"),
+    views.map((v) => num(v.validators)),
+    () => explainFrom("rowValidators", "mValidatorsWhat", "mValidatorsHow", "mValidatorsLimits", both, verified)
+  );
+  add(
+    t("rowTop10"),
+    views.map((v) => pct(v.top10)),
+    () => explainFrom("rowTop10", "mTop10What", "mTop10How", "mTop10Limits", both, verified)
+  );
+  add(
+    t("rowN33"),
+    views.map((v) => num(v.n33)),
+    () =>
+      explainFrom(
+        "rowNakamoto",
+        "mNakamotoWhat",
+        "mNakamotoHow",
+        "mNakamotoLimits",
+        [srcById(data, "cometbft-thresholds"), srcById(data, "snow-whitepaper")].filter(Boolean) as SourceEntry[],
+        verified
+      )
+  );
+  add(
+    t("rowSelect"),
+    views.map((v) => v.selection),
+    () =>
+      explainFrom(
+        "rowBlockProd",
+        "mBlockWhat",
+        "mBlockHow",
+        "mBlockLimits",
+        [srcById(data, "heimdall-v2-veblop"), srcById(data, "snow-whitepaper")].filter(Boolean) as SourceEntry[],
+        verified
+      ),
+    t("rowSelectScope")
+  );
+  add(
+    t("rowUpgradeHome"),
+    views.map((v) => v.upgrade),
+    () =>
+      explainFrom(
+        "rowUpgrade",
+        "mUpgradeWhat",
+        "mUpgradeHow",
+        "mUpgradeLimits",
+        [srcById(data, "timelock"), srcById(data, "safe-multisig"), srcById(data, "avalanchego-upgrade")].filter(
+          Boolean
+        ) as SourceEntry[],
+        verified
+      )
+  );
+
+  table.append(thead, tbody);
+  parent.append(table);
+}
+
+function renderBars(parent: HTMLElement, views: ChainView[]): void {
+  const maxTop = Math.max(...views.map((v) => v.top10));
+  const uniqueLeader = views.filter((v) => v.top10 === maxTop).length === 1;
+  const head = el("div", "bars-head");
+  head.append(el("div", "bars-label", t("barsLabel")));
+  head.append(el("div", "bars-scale", t("barsScale")));
+  const wrap = el("div", "bars");
+  for (const view of views) {
+    const row = el("div", "bar-row");
+    row.append(el("div", "bar-name", view.name));
+    const track = el("div", "bar-track");
+    track.setAttribute("role", "img");
+    track.setAttribute("aria-label", `${view.name} ${pct(view.top10)}`);
+    const fill = el("span", view.top10 === maxTop && uniqueLeader ? "bar-fill higher" : "bar-fill");
+    fill.style.width = `${Math.min(100, view.top10 * 100)}%`;
+    track.append(fill);
+    row.append(track, el("div", "bar-value", pct(view.top10)));
+    wrap.append(row);
+  }
+  parent.append(head, wrap);
+}
+
 /* ---------------- root ---------------- */
 
 export function renderApp(
@@ -672,81 +963,115 @@ export function renderApp(
   lang: Lang
 ): void {
   root.replaceChildren();
+  const latest = data.latest;
+  const views = chainViews(latest);
 
-  // Header
   const header = el("header", "site-header");
   const hgroup = el("div", "header-group");
-  hgroup.append(
-    el("h1", "site-title", t("title")),
-    el("p", "site-subtitle", t("subtitle"))
-  );
+  hgroup.append(el("h1", "site-title", t("title")));
+  hgroup.append(el("p", "site-subtitle", t("subtitle")));
   const controls = el("div", "header-controls");
+  controls.append(
+    iconLink(GITHUB_URL, "GitHub", "0 0 16 16", GITHUB_PATH),
+    iconLink(X_URL, "X", "0 0 24 24", X_PATH)
+  );
   const langBtn = el("button", "lang-btn", t("langLabel"));
   langBtn.addEventListener("click", () => onToggleLang(lang === "en" ? "zh" : "en"));
   controls.append(langBtn);
   header.append(hgroup, controls);
   root.append(header);
 
-  root.append(el("p", "tagline", t("tagline")));
+  root.append(el("p", "conclusion", conclusionText(views)));
+  if (views.length > 0) root.append(el("p", "conclusion-scope", t("conclusionScope")));
+  renderBars(root, views);
+  renderHomeTable(root, data, views);
 
-  // Status / freshness banner
-  const latest = data.latest;
+  const details = el("details", "evidence");
+  const summary = el("summary", "", t("detailsSummary"));
+  const body = el("div", "evidence-body");
+
+  const addLayer = (title: string, fill: (layer: HTMLElement) => void) => {
+    const layer = el("details", "evidence-layer");
+    layer.append(el("summary", "", title));
+    const layerBody = el("div", "evidence-layer-body");
+    fill(layerBody);
+    layer.append(layerBody);
+    body.append(layer);
+  };
+
+  addLayer(t("evValidators"), (layer) => {
+    const hero = el("section", "hero");
+    if (latest.networks.avalanche) {
+      const panelA = el("div", "chain-panel");
+      renderAvalanchePanel(panelA, data);
+      hero.append(panelA);
+    }
+    if (latest.networks.polygon_pos) {
+      const panelP = el("div", "chain-panel");
+      renderPolygonPanel(panelP, data);
+      hero.append(panelP);
+    }
+    layer.append(hero);
+  });
+
+  addLayer(t("evEntity"), (layer) => {
+    const entity = el("p", "fine-print", `${t("rowEntity")}: ${t("entityUnknown")}`);
+    bindExplain(entity, () => ({
+      title: t("rowEntity"),
+      what: t("mEntityWhat"),
+      how: t("mEntityHow"),
+      sources: [{ label: "methodology.json", url: "./data/methodology.json" }],
+      limits: t("mEntityLimits"),
+      verified: latest.generated_at,
+    }));
+    layer.append(entity);
+  });
+
+  addLayer(t("evControl"), (layer) => {
+    const tableSec = el("section", "section");
+    renderTable(tableSec, data);
+    const rulesSec = el("section", "section");
+    renderRules(rulesSec, data);
+    layer.append(tableSec, rulesSec);
+  });
+
+  addLayer(t("evHistory"), (layer) => {
+    const histSec = el("section", "section");
+    renderHistory(histSec, data);
+    layer.append(histSec);
+  });
+
+  addLayer(t("evSources"), (layer) => {
+    const srcSec = el("section", "section");
+    renderSources(srcSec, data);
+    const method = el("p", "fine-print");
+    const methodLink = el("a", "", t("methodologyLink"));
+    methodLink.href = "./data/methodology.json";
+    methodLink.target = "_blank";
+    methodLink.rel = "noopener noreferrer";
+    method.append(methodLink);
+    layer.append(srcSec, method, el("p", "fine-print", t("footerNote")));
+  });
+
+  details.append(summary, body);
+  root.append(details);
+
   const attempt = data.lastAttempt;
-  const banner = el("div", `status-banner status-${attempt?.status ?? latest.status}`);
-  const latestTime = utcTime(latest.generated_at);
-  banner.append(
-    el("span", "status-text", `${t("updatedAt", { t: latestTime })} · ${t("lastUpdated")}: ${fmtAge(latest.generated_at)} · ${t(
-      attempt && attempt.status !== "ok" ? "statusPartial" : "statusOk"
-    )}`)
+  const status = attempt?.status ?? latest.status;
+  const statusKey = status === "error" ? "statusError" : status === "partial" || status !== "ok" ? "statusPartial" : "statusOk";
+  const updated = el(
+    "p",
+    "updated-line",
+    `${t("updatedAt", { t: utcTime(latest.generated_at) })} · ${fmtAge(latest.generated_at)} · ${t(statusKey)}`
   );
+  root.append(updated);
   if (attempt && attempt.status !== "ok") {
     const reasons = [
       ...Object.entries(attempt.errors).map(([k, v]) => `${k}: ${v}`),
       ...Object.values(attempt.anomalies).flat(),
     ];
     if (reasons.length) {
-      banner.append(el("div", "status-reason", t("staleReason", { reason: reasons.join(" · ") })));
+      root.append(el("p", "updated-line", t("staleReason", { reason: reasons.join(" · ") })));
     }
   }
-  for (const w of latest.warnings ?? []) {
-    banner.append(el("div", "status-reason", w));
-  }
-  root.append(banner);
-
-  // Hero panels
-  const hero = el("section", "hero");
-  const panelA = el("div", "chain-panel");
-  const panelP = el("div", "chain-panel");
-  if (latest.networks.avalanche) renderAvalanchePanel(panelA, data);
-  if (latest.networks.polygon_pos) renderPolygonPanel(panelP, data);
-  hero.append(panelA, panelP);
-  root.append(hero);
-
-  // Table
-  const tableSec = el("section", "section");
-  renderTable(tableSec, data);
-  root.append(tableSec);
-
-  // Rules
-  const rulesSec = el("section", "section");
-  renderRules(rulesSec, data);
-  root.append(rulesSec);
-
-  // History
-  const histSec = el("section", "section");
-  renderHistory(histSec, data);
-  root.append(histSec);
-
-  // Sources
-  const srcSec = el("section", "section");
-  renderSources(srcSec, data);
-  root.append(srcSec);
-
-  // Footer
-  const footer = el("footer", "site-footer");
-  footer.append(
-    el("p", "fine-print", t("footerNote")),
-    el("p", "fine-print", `${t("dataFrom")}: api.avax.network · heimdall-api.polygon.technology · polygon-bor-rpc.publicnode.com · Ethereum mainnet JSON-RPC`)
-  );
-  root.append(footer);
 }

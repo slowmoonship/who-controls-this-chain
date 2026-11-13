@@ -4,6 +4,31 @@ type Dict = Record<string, string>;
 
 const en: Dict = {
   title: "Who Controls This Chain?",
+  conclusionLead: "{chain} shows stronger signs of concentrated control",
+  conclusionClose:
+    "Top 10 stake shares are close: {chain} {share}, {other} {otherShare}.",
+  conclusionTie: "Top 10 stake share is the same on these chains ({share}).",
+  conclusionScope:
+    "Based on stake weight, block-production mechanism, and verified upgrade authority over specific protocol components.",
+  detailsSummary: "Detailed evidence and method",
+  barsLabel: "Top 10 validators' stake weight",
+  barsScale: "0–100% scale",
+  rowSelect: "How producers are chosen",
+  rowSelectScope: "Different consensus models — not a count comparison",
+  selectAvalanche: "Snowman++: stake-sampled leaders across all validators. No fixed producer set.",
+  selectPolygon: "Bor: one producer per span, rotating through an elected pool of {pool}. Orders that span only.",
+  rowUpgradeHome: "Upgrade authority",
+  upgradeHomeAvalanche: "Primary Network rules ship in avalanchego. No on-chain admin key.",
+  upgradeHomePolygon:
+    "{threshold}-of-{owners} Safe and a {delay}s timelock own the StakeManager and RootChain proxies only — not arbitrary chain state.",
+  evValidators: "Validator dots and span rotation",
+  evEntity: "Entity concentration",
+  evControl: "Consensus, block production, and contract upgrades",
+  evHistory: "History",
+  evSources: "Sources, method, and limits",
+  producersNone: "No fixed set",
+  rowN33: "Validators to 33% of weight",
+  rowProducersNow: "Block producers now",
   subtitle: "Who really controls the blockchain?",
   tagline:
     "Two chains, two power structures. Not how many validators exist — how few actors it takes to control the things that matter.",
@@ -53,6 +78,8 @@ const en: Dict = {
   rowMax: "Largest validator share",
   rowNakamoto: "Nakamoto-style concentration",
   rowNakamotoUnit: "validators to reach 33% / 50% of weight",
+  rowEntity: "Entity concentration",
+  entityUnknown: "Unknown",
   rowBlockProd: "Block production",
   rowUpgrade: "Protocol upgrades",
   diffModel: "Different consensus model",
@@ -73,13 +100,13 @@ const en: Dict = {
   evidenceLabel: "Evidence",
 
   rcAvalanche:
-    "Snowman-family consensus over 542 stake-weighted validators; finality follows repeated stake-sampled voting. No fixed committee.",
+    "Snowman-family consensus over {n} stake-weighted validators; finality follows repeated stake-sampled voting. No fixed committee.",
   rcAvalancheRisk:
-    "Weight is fairly spread today (top 10 ≈ 19%), but consensus safety still degrades probabilistically as any single stake bloc grows.",
+    "Top 10 hold {top10} of stake weight. Consensus safety still degrades probabilistically as any single stake bloc grows.",
   rcPolygon:
-    "Heimdall v2 runs CometBFT over 100 validators. >1/3 of voting power can halt finality; >2/3 can finalize conflicting state. Top 10 hold ≈66% of power.",
+    "Heimdall v2 runs CometBFT over {n} validators. >1/3 of voting power can halt finality; >2/3 can finalize conflicting state. Top 10 hold {top10} of power.",
   rcPolygonRisk:
-    "4 validators already reach 33%; 7 reach 50%. Small coordinated groups can halt checkpoints/milestones.",
+    "{n33} validators already reach 33%; {n50} reach 50%. Small coordinated groups can halt checkpoints/milestones.",
   bpAvalanche:
     "No span-style producer role. Leaders are sampled proportional to stake across all validators.",
   bpAvalancheRisk:
@@ -87,13 +114,13 @@ const en: Dict = {
   bpPolygon:
     "veBlop: validators elect a pool (stake-weighted votes), then exactly one producer serves each 6400-block span, round-robin. Observed pool right now: {pool} signers.",
   bpPolygonRisk:
-    "Within its span one producer fully orders Bor blocks. Rotation limits the window (~3.6 h) but concentration is extreme: 1% of validators produce 100% of blocks in-span.",
+    "Within its span the producer fully orders Bor blocks. Rotation limits the window (~3.6 h). This span: {n} of {total} validators produce 100% of its blocks.",
   puAvalanche:
     "Named upgrades (Apricot→Helicon) activate at timestamps compiled into avalanchego. Validators must adopt the new binary; no on-chain admin key exists.",
   puAvalancheRisk:
     "No multisig ≠ no risk: influence concentrates in client development (Ava Labs) and release coordination. Un-upgraded validators simply fall off.",
   puPolygon:
-    "L1 staking/bridge contracts sit behind UpgradableProxies owned by a TimelockController. The timelock's proposer+executor is a 5-of-9 Gnosis Safe; getMinDelay() = 0 s. Heimdall params need x/gov; hardfork heights ship in client binaries.",
+    "L1 staking/bridge contracts sit behind UpgradableProxies owned by a TimelockController. The timelock's proposer+executor is a {threshold}-of-{owners} Gnosis Safe; getMinDelay() = {delay} s. Heimdall params need x/gov; hardfork heights ship in client binaries.",
   puPolygonRisk:
     "5 of 9 signers can upgrade StakeManager/RootChain logic with no waiting period — in principle rewriting staking/withdrawal or checkpoint-verification rules. Not a key over user wallets, but a major control point.",
 
@@ -109,7 +136,10 @@ const en: Dict = {
 
   // History
   historyTitle: "Since collection started",
-  historyNote: "Snapshots accumulate every 6 hours. Charts appear once two snapshots exist.",
+  historyNote:
+    "Snapshots accumulate every 6 hours. Charts appear once two snapshots exist. Span-by-span producer changes come from recent Heimdall spans on the Polygon panel — a span is shorter than the collection interval.",
+  rotationTitle: "Span producer rotation",
+  rotationSummary: "{spans} recent spans · {distinct} distinct producers · oldest → newest",
   seriesValidators: "Active validators",
   seriesTop10: "Top-10 stake share",
   seriesNc: "Validators to reach 33%",
@@ -175,6 +205,29 @@ const en: Dict = {
 
 const zh: Dict = {
   title: "谁控制这条链？",
+  conclusionLead: "{chain} 的权力集中信号更强",
+  conclusionClose: "前 10 名质押占比接近：{chain} {share}，{other} {otherShare}。",
+  conclusionTie: "这些链的前 10 名质押占比相同（{share}）。",
+  conclusionScope: "基于质押权重、出块机制和已核实的部分协议升级权限。",
+  detailsSummary: "详细证据与研究方法",
+  barsLabel: "前 10 名验证者的质押权重",
+  barsScale: "统一 0–100% 比例",
+  rowSelect: "出块者选择机制",
+  rowSelectScope: "共识模型不同，不能按出块者数量比较",
+  selectAvalanche: "Snowman++：全体验证者按质押抽样。无固定出块者集合。",
+  selectPolygon: "Bor：每个 span 一名出块者，在 {pool} 人当选池内轮换。仅限该 span 内排序。",
+  rowUpgradeHome: "关键升级权限",
+  upgradeHomeAvalanche: "主网规则随 avalanchego 发布生效。没有链上管理员密钥。",
+  upgradeHomePolygon:
+    "{threshold}/{owners} Safe 与 {delay} 秒 Timelock 只拥有 StakeManager 和 RootChain 代理，不能修改任意链状态。",
+  evValidators: "验证者点阵与 span 轮换",
+  evEntity: "实体集中度",
+  evControl: "共识控制、出块与合约升级权限",
+  evHistory: "历史趋势",
+  evSources: "来源、计算方法与局限性",
+  producersNone: "无固定集合",
+  rowN33: "达到 33% 权重所需验证者",
+  rowProducersNow: "当前出块者",
   subtitle: "Who really controls the blockchain?",
   tagline: "两条链，两种权力结构。关键不是有多少验证者，而是多少主体联合起来就能控制关键权力。",
   lastUpdated: "最后更新",
@@ -220,6 +273,8 @@ const zh: Dict = {
   rowMax: "最大验证者占比",
   rowNakamoto: "中本聪系数（集中度口径）",
   rowNakamotoUnit: "达到 33% / 50% 权重所需验证者数",
+  rowEntity: "实体集中度",
+  entityUnknown: "Unknown",
   rowBlockProd: "出块机制",
   rowUpgrade: "协议升级",
   diffModel: "共识模型不同",
@@ -239,24 +294,24 @@ const zh: Dict = {
   evidenceLabel: "证据",
 
   rcAvalanche:
-    "Snowman 系共识由 542 个按质押加权的验证者参与，最终性来自反复的抽样投票。没有固定委员会。",
+    "Snowman 系共识由 {n} 个按质押加权的验证者参与，最终性来自反复的抽样投票。没有固定委员会。",
   rcAvalancheRisk:
-    "当前权重分布较分散（前 10 约 19%），但任何单一质押集团增大都会概率性削弱共识安全。",
+    "前 10 名合计 {top10}。任何单一质押集团增大都会概率性削弱共识安全。",
   rcPolygon:
-    "Heimdall v2 在 100 个验证者上运行 CometBFT。>1/3 投票权重可阻断最终性；>2/3 可最终确认互相冲突的状态。前 10 掌握约 66% 权重。",
-  rcPolygonRisk: "4 个验证者即达 33%，7 个达 50%。小规模协调即可阻断检查点/里程碑。",
+    "Heimdall v2 在 {n} 个验证者上运行 CometBFT。>1/3 投票权重可阻断最终性；>2/3 可最终确认互相冲突的状态。前 10 掌握 {top10} 权重。",
+  rcPolygonRisk: "{n33} 个验证者即达 33%，{n50} 个达 50%。小规模协调即可阻断检查点/里程碑。",
   bpAvalanche: "没有 span 式出块者角色。领导者按质押权重在全体验证者中抽样。",
   bpAvalancheRisk: "大验证者出块更频繁，但只能短暂审查；历史由全体投票最终确认。",
   bpPolygon:
     "veBlop：验证者投票选出候选池（质押加权），之后每 6400 个区块的 span 由恰好 1 名出块者轮流出块。当前观察到的池：{pool} 个签名者。",
   bpPolygonRisk:
-    "在 span 内，单一出块者完全控制 Bor 区块排序。轮换限制了窗口（约 3.6 小时），但集中度极端：1% 的验证者产出 span 内 100% 的区块。",
+    "在 span 内，出块者完全控制 Bor 区块排序。轮换限制了窗口（约 3.6 小时）。本 span：{total} 个验证者中的 {n} 个产出其中 100% 的区块。",
   puAvalanche:
     "命名升级（Apricot→Helicon）以编译进 avalanchego 的时间戳激活。验证者必须升级二进制；不存在链上管理员密钥。",
   puAvalancheRisk:
     "「没有多签」≠「没有中心化风险」：影响力集中在客户端开发（Ava Labs）与发布协调。未升级的验证者会掉队。",
   puPolygon:
-    "L1 质押/跨链合约位于 UpgradableProxy 之后，proxy owner 是 TimelockController。Timelock 的 proposer+executor 是 5/9 Gnosis Safe；getMinDelay() = 0 秒。Heimdall 参数需 x/gov；硬分叉高度编译在客户端二进制中。",
+    "L1 质押/跨链合约位于 UpgradableProxy 之后，proxy owner 是 TimelockController。Timelock 的 proposer+executor 是 {threshold}/{owners} Gnosis Safe；getMinDelay() = {delay} 秒。Heimdall 参数需 x/gov；硬分叉高度编译在客户端二进制中。",
   puPolygonRisk:
     "9 个签名者中的 5 个即可无等待期升级 StakeManager/RootChain 逻辑 — 原则上可改写质押/提现或检查点验证规则。它不是用户钱包的密钥，但仍是关键控制点。",
 
@@ -270,7 +325,10 @@ const zh: Dict = {
   close: "关闭",
 
   historyTitle: "自采集启动以来",
-  historyNote: "每 6 小时累积快照。存在两个以上快照后显示趋势图。",
+  historyNote:
+    "每 6 小时累积快照。有两个快照后显示趋势图。每个 span 的出块者变化来自 Polygon 面板上最近的 Heimdall span，因为一个 span 短于采集间隔。",
+  rotationTitle: "出块者轮换",
+  rotationSummary: "最近 {spans} 个 span · {distinct} 个不同出块者 · 从旧到新",
   seriesValidators: "活跃验证者",
   seriesTop10: "前 10 质押占比",
   seriesNc: "达到 33% 所需验证者数",
