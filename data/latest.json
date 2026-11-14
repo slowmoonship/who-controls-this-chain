@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-14T06:44:44Z",
+  "generated_at": "2026-11-14T18:18:18Z",
   "status": "ok",
   "warnings": [],
   "networks": {
@@ -8,15 +8,15 @@
       "network": "avalanche",
       "name": "Avalanche Primary Network",
       "chain_heights": {
-        "p_chain_height": "25864050"
+        "p_chain_height": "25867689"
       },
       "metrics": {
-        "active_validators": 608,
-        "total_weight": "173610330647078382",
+        "active_validators": 606,
+        "total_weight": "173947097094372857",
         "weight_unit": "nAVAX",
-        "delegated_weight": "45850136218516979",
-        "top10_share": 0.168247,
-        "max_share": 0.01728,
+        "delegated_weight": "45946160901475792",
+        "top10_share": 0.167921,
+        "max_share": 0.017247,
         "nakamoto": {
           "n_33": 24,
           "n_50": 44
@@ -27,71 +27,71 @@
           "node_id": "NodeID-8su1eeSjb4emswAx453du7ya3Pp8p2wSe",
           "weight": "2999994000000000",
           "delegator_weight": "0",
-          "share": 0.01728,
-          "uptime": "99.9670"
+          "share": 0.017247,
+          "uptime": "99.9639"
         },
         {
           "node_id": "NodeID-HqeE7wcqkoZwhnwv6ADxudhZvoSH76pcw",
           "weight": "2999990000000000",
           "delegator_weight": "0",
-          "share": 0.01728,
-          "uptime": "99.9297"
+          "share": 0.017247,
+          "uptime": "99.9240"
         },
         {
           "node_id": "NodeID-EboRgvw57eqzfafbFxwF3NAPLLFaNQjin",
           "weight": "2999990000000000",
           "delegator_weight": "0",
-          "share": 0.01728,
-          "uptime": "99.9862"
+          "share": 0.017247,
+          "uptime": "99.9851"
         },
         {
           "node_id": "NodeID-Ha5u99aoKUdNdTdomp8bQcWHUw8PSF7em",
           "weight": "2985425000000000",
           "delegator_weight": "0",
-          "share": 0.017196,
-          "uptime": "99.9528"
+          "share": 0.017163,
+          "uptime": "99.9388"
         },
         {
           "node_id": "NodeID-LWNS6TbpdhoMKk2sBJyNmte39qUukb23R",
           "weight": "2949561316667610",
           "delegator_weight": "0",
-          "share": 0.01699,
-          "uptime": "99.9753"
+          "share": 0.016957,
+          "uptime": "99.9541"
         },
         {
           "node_id": "NodeID-Q1ZzBXtcP9xUMTEUEks5cpx9f1q3tTjT5",
           "weight": "2927940165000293",
           "delegator_weight": "934879283893",
-          "share": 0.016865,
-          "uptime": "99.8801"
+          "share": 0.016832,
+          "uptime": "99.8729"
         },
         {
           "node_id": "NodeID-PCZJk3NoSfpD32WokykYHKrKuE814SAVM",
           "weight": "2927911337830253",
           "delegator_weight": "0",
-          "share": 0.016865,
-          "uptime": "99.9580"
+          "share": 0.016832,
+          "uptime": "99.9480"
         },
         {
           "node_id": "NodeID-Hq4MpMS7A2WXakmiEEPC2S7iccY5zVEWA",
           "weight": "2927902539936947",
           "delegator_weight": "0",
-          "share": 0.016865,
-          "uptime": "99.8906"
+          "share": 0.016832,
+          "uptime": "99.8830"
         },
         {
           "node_id": "NodeID-7ZqQjoKjWR1esHETZQAqdo8EnC72iu9Gh",
           "weight": "2790669844261985",
           "delegator_weight": "0",
-          "share": 0.016074,
-          "uptime": "99.9553"
+          "share": 0.016043,
+          "uptime": "99.9403"
         },
         {
           "node_id": "NodeID-Ns1eDN3K9HTnavgiBQhtpzRxUCxJ55Xhc",
           "weight": "2700000000000000",
-          "delegator_weight": "148737518387363",
-          "share": 0.015552,
-          "uptime": "38.9895"
+          "delegator_weight": "137679668116184",
+          "share": 0.015522,
+          "uptime": "36.3772"
         }
       ],
       "weights_sorted_desc": [
@@ -179,9 +179,10 @@
         "648133008620521",
         "643441000000000",
         "643400000000000",
+        "641698349517194",
         "633949000000000",
         "629999969966696",
-        "629308561917743",
+        "629460061496714",
         "626284940745501",
         "600000000000000",
         "600000000000000",
@@ -240,7 +241,6 @@
         "350000000000000",
         "330000000000000",
         "330000000000000",
-        "330000000000000",
         "321174329961575",
         "304545825869674",
         "300000000000000",
@@ -282,7 +282,7 @@
         "181097071392762",
         "173635508781581",
         "172562000000573",
-        "171187327964358",
+        "171228684824358",
         "165000000000000",
         "165000000000000",
         "161625000020295",
@@ -366,6 +366,7 @@
         "42688510029624",
         "41510341095574",
         "41000000000000",
+        "40790505136092",
         "40751143155311",
         "37971376004959",
         "37846000000000",
@@ -401,7 +402,7 @@
         "26000000000000",
         "25978000000000",
         "25571800448032",
-        "25000000000000",
+        "25185863540329",
         "24866027978766",
         "24399999849296",
         "24095000000000",
@@ -465,7 +466,6 @@
         "9954433498867",
         "9829000000000",
         "9174337676892",
-        "9033357112323",
         "8971590245518",
         "8350000000000",
         "8167632569009",
@@ -491,7 +491,6 @@
         "5138500000000",
         "5085248284335",
         "5084665756088",
-        "5068252554580",
         "5000000000000",
         "5000000000000",
         "5000000000000",
@@ -597,7 +596,7 @@
         "2009265106618",
         "2008104867487",
         "2007411472139",
-        "2005486912810",
+        "2005969241602",
         "2004999813073",
         "2002989995865",
         "2002000000000",
@@ -611,7 +610,6 @@
         "2000157383180",
         "2000010000000",
         "2000002000000",
-        "2000000000000",
         "2000000000000",
         "2000000000000",
         "2000000000000",
@@ -730,13 +728,13 @@
       "network": "polygon_pos",
       "name": "Polygon PoS (Heimdall v2 + Bor)",
       "chain_heights": {
-        "heimdall_height": "57855202"
+        "heimdall_height": "57892499"
       },
       "heimdall": {
         "active_validators": 100,
-        "total_voting_power": "3809025176",
-        "top10_share": 0.663732,
-        "max_share": 0.116296,
+        "total_voting_power": "3809424995",
+        "top10_share": 0.663858,
+        "max_share": 0.11643,
         "nakamoto": {
           "n_33": 4,
           "n_50": 7
@@ -746,70 +744,70 @@
         {
           "val_id": "163",
           "signer": "0x69f5c4d08f6bc8cd29fe5f004d46fb566270868d",
-          "voting_power": "442973126",
-          "share": 0.116296,
+          "voting_power": "443533126",
+          "share": 0.11643,
           "name": "Upbit Staking"
         },
         {
           "val_id": "87",
           "signer": "0x1efecb61a2f80aa34d3b9218b564a64d05946290",
           "voting_power": "403396326",
-          "share": 0.105905,
+          "share": 0.105894,
           "name": "Figment"
         },
         {
           "val_id": "142",
           "signer": "0x0e8d3a5f8c7528fa8a0cb8d8a62482bb56f287a9",
-          "voting_power": "365400258",
-          "share": 0.09593,
+          "voting_power": "365666476",
+          "share": 0.09599,
           "name": "Coinbase"
         },
         {
           "val_id": "194",
           "signer": "0x203847fbc212987f83680e0682e45e930eb11b0e",
           "voting_power": "251121465",
-          "share": 0.065928
+          "share": 0.065921
         },
         {
           "val_id": "139",
           "signer": "0x794e44d1334a56fea7f4df12633b88820d0c5888",
           "voting_power": "207780686",
-          "share": 0.05455,
+          "share": 0.054544,
           "name": "Matic Power"
         },
         {
           "val_id": "137",
           "signer": "0x67b94473d81d0cd00849d563c94d0432ac988b49",
           "voting_power": "179030140",
-          "share": 0.047002,
+          "share": 0.046997,
           "name": "Binance Node"
         },
         {
           "val_id": "143",
           "signer": "0x048cfedf907c4c9ddd11ff882380906e78e84bbe",
-          "voting_power": "177022415",
-          "share": 0.046474,
+          "voting_power": "176942415",
+          "share": 0.046449,
           "name": "Blockdaemon"
         },
         {
           "val_id": "88",
           "signer": "0xbd1a2b2962fd833caa4e5b8792b2b9b30066eb20",
           "voting_power": "176625341",
-          "share": 0.04637,
+          "share": 0.046365,
           "name": "Kraken"
         },
         {
           "val_id": "18",
           "signer": "0x9ead03f7136fc6b4bdb0780b00a1c14ae5a8b6d0",
           "voting_power": "167092628",
-          "share": 0.043868,
+          "share": 0.043863,
           "name": "Luganodes"
         },
         {
           "val_id": "47",
           "signer": "0xb514443af4fd443a7826f72393149f98a9e8d736",
-          "voting_power": "157728586",
-          "share": 0.041409,
+          "voting_power": "157729665",
+          "share": 0.041405,
           "name": "Kiln x Ownest 🔸 Pro Staking 🔸"
         }
       ],
@@ -817,166 +815,166 @@
         {
           "val_id": "163",
           "signer": "0x69f5c4d08f6bc8cd29fe5f004d46fb566270868d",
-          "voting_power": "442973126",
-          "share": 0.116296,
+          "voting_power": "443533126",
+          "share": 0.11643,
           "name": "Upbit Staking"
         },
         {
           "val_id": "87",
           "signer": "0x1efecb61a2f80aa34d3b9218b564a64d05946290",
           "voting_power": "403396326",
-          "share": 0.105905,
+          "share": 0.105894,
           "name": "Figment"
         },
         {
           "val_id": "142",
           "signer": "0x0e8d3a5f8c7528fa8a0cb8d8a62482bb56f287a9",
-          "voting_power": "365400258",
-          "share": 0.09593,
+          "voting_power": "365666476",
+          "share": 0.09599,
           "name": "Coinbase"
         },
         {
           "val_id": "194",
           "signer": "0x203847fbc212987f83680e0682e45e930eb11b0e",
           "voting_power": "251121465",
-          "share": 0.065928
+          "share": 0.065921
         },
         {
           "val_id": "139",
           "signer": "0x794e44d1334a56fea7f4df12633b88820d0c5888",
           "voting_power": "207780686",
-          "share": 0.05455,
+          "share": 0.054544,
           "name": "Matic Power"
         },
         {
           "val_id": "137",
           "signer": "0x67b94473d81d0cd00849d563c94d0432ac988b49",
           "voting_power": "179030140",
-          "share": 0.047002,
+          "share": 0.046997,
           "name": "Binance Node"
         },
         {
           "val_id": "143",
           "signer": "0x048cfedf907c4c9ddd11ff882380906e78e84bbe",
-          "voting_power": "177022415",
-          "share": 0.046474,
+          "voting_power": "176942415",
+          "share": 0.046449,
           "name": "Blockdaemon"
         },
         {
           "val_id": "88",
           "signer": "0xbd1a2b2962fd833caa4e5b8792b2b9b30066eb20",
           "voting_power": "176625341",
-          "share": 0.04637,
+          "share": 0.046365,
           "name": "Kraken"
         },
         {
           "val_id": "18",
           "signer": "0x9ead03f7136fc6b4bdb0780b00a1c14ae5a8b6d0",
           "voting_power": "167092628",
-          "share": 0.043868,
+          "share": 0.043863,
           "name": "Luganodes"
         },
         {
           "val_id": "47",
           "signer": "0xb514443af4fd443a7826f72393149f98a9e8d736",
-          "voting_power": "157728586",
-          "share": 0.041409,
+          "voting_power": "157729665",
+          "share": 0.041405,
           "name": "Kiln x Ownest 🔸 Pro Staking 🔸"
         },
         {
           "val_id": "188",
           "signer": "0x4b265385e2f5589563238234e90ae76e71ddcab8",
-          "voting_power": "151415494",
-          "share": 0.039752
+          "voting_power": "151637711",
+          "share": 0.039806
         },
         {
           "val_id": "72",
           "signer": "0xce7fcb674ba27a952c71061b649fb5a5746f3b2b",
           "voting_power": "114265133",
-          "share": 0.029999
+          "share": 0.029995
         },
         {
           "val_id": "92",
           "signer": "0x9aa1e7971a94cbc400d95e593e82fb6e79fc99d8",
           "voting_power": "95389074",
-          "share": 0.025043
+          "share": 0.02504
         },
         {
           "val_id": "94",
           "signer": "0x264379c47e653dafa153841a995cf975b6a02ed7",
           "voting_power": "93491837",
-          "share": 0.024545
+          "share": 0.024542
         },
         {
           "val_id": "91",
           "signer": "0xe8de70b95a4d105aff6584a722242726016956fe",
           "voting_power": "83489003",
-          "share": 0.021919
+          "share": 0.021916
         },
         {
           "val_id": "93",
           "signer": "0x233d596e31ed170da60209fe5701800c6b086cb7",
           "voting_power": "80865107",
-          "share": 0.02123
+          "share": 0.021228
         },
         {
           "val_id": "77",
           "signer": "0x97667d210b374a8852797c8bc984a0e2fac51bc7",
-          "voting_power": "74422571",
-          "share": 0.019538
+          "voting_power": "74421113",
+          "share": 0.019536
         },
         {
           "val_id": "121",
           "signer": "0xb9ede6f94d192073d8eaf85f8db677133d483249",
-          "voting_power": "73571102",
-          "share": 0.019315
+          "voting_power": "73556402",
+          "share": 0.019309
         },
         {
           "val_id": "148",
           "signer": "0xa8b52f02108aa5f4b675bdcc973760022d7c6020",
           "voting_power": "73556307",
-          "share": 0.019311
+          "share": 0.019309
         },
         {
           "val_id": "162",
           "signer": "0xf75eaa3d40152b56d2f4d60055fe3547b9a2105a",
           "voting_power": "65113499",
-          "share": 0.017095
+          "share": 0.017093
         },
         {
           "val_id": "197",
           "signer": "0xc29ba095faace05c26ac6d7d54599fc93148644f",
           "voting_power": "59167140",
-          "share": 0.015533
+          "share": 0.015532
         },
         {
           "val_id": "110",
           "signer": "0xf0245f6251bef9447a08766b9da2b07b28ad80b0",
-          "voting_power": "56600512",
-          "share": 0.01486
+          "voting_power": "56612549",
+          "share": 0.014861
         },
         {
           "val_id": "30",
           "signer": "0xc84c1e8dffe81c8f69f2b655557ef57d5b46beb5",
-          "voting_power": "44598401",
-          "share": 0.011709
+          "voting_power": "44600531",
+          "share": 0.011708
         },
         {
           "val_id": "192",
           "signer": "0x73cc34e74d9bbe10c1854edd5600346ab05ee7d3",
           "voting_power": "21679808",
-          "share": 0.005692
+          "share": 0.005691
         },
         {
           "val_id": "118",
           "signer": "0xdbd955c88fd9c6ec826a69b35d7699d32cc5f12f",
-          "voting_power": "15696331",
+          "voting_power": "15699580",
           "share": 0.004121
         },
         {
           "val_id": "32",
           "signer": "0x02f70172f7f490653665c9bfac0666147c8af1f5",
-          "voting_power": "10809233",
+          "voting_power": "10809278",
           "share": 0.002838
         },
         {
@@ -988,13 +986,13 @@
         {
           "val_id": "109",
           "signer": "0x5fe93ddf4490a02257bef079f2498650c97c44de",
-          "voting_power": "9090363",
+          "voting_power": "9091969",
           "share": 0.002387
         },
         {
           "val_id": "181",
           "signer": "0x6d01ad4102f5ec57efc7a3e290c0972c8d23dd66",
-          "voting_power": "8990683",
+          "voting_power": "8991432",
           "share": 0.00236
         },
         {
@@ -1013,7 +1011,7 @@
           "val_id": "127",
           "signer": "0x00856730088a5c3191bd26eb482e45229555ce57",
           "voting_power": "7514077",
-          "share": 0.001973
+          "share": 0.001972
         },
         {
           "val_id": "130",
@@ -1061,13 +1059,13 @@
           "val_id": "12",
           "signer": "0xe235ea9ad4fb0596db561058292b27d3175ead60",
           "voting_power": "3940757",
-          "share": 0.001035
+          "share": 0.001034
         },
         {
           "val_id": "134",
           "signer": "0x73d378cfeaa5cbe8daed64128ebdc91322aa586b",
           "voting_power": "3654964",
-          "share": 0.00096
+          "share": 0.000959
         },
         {
           "val_id": "79",
@@ -1090,8 +1088,8 @@
         {
           "val_id": "186",
           "signer": "0xb6a9ffc20d62e98e4737b90c720b613c619d191f",
-          "voting_power": "2835049",
-          "share": 0.000744
+          "voting_power": "2858912",
+          "share": 0.00075
         },
         {
           "val_id": "73",
@@ -1109,7 +1107,7 @@
           "val_id": "45",
           "signer": "0x30523527aced0ed2f5ce1721086d1d282d3af38f",
           "voting_power": "2672290",
-          "share": 0.000702
+          "share": 0.000701
         },
         {
           "val_id": "9",
@@ -1262,12 +1260,6 @@
           "share": 0.00024
         },
         {
-          "val_id": "180",
-          "signer": "0x0b20bac4ae3628f184f363c82bf5d9e16ce771fa",
-          "voting_power": "897925",
-          "share": 0.000236
-        },
-        {
           "val_id": "125",
           "signer": "0x06abe41e26db44ad94fe61db2ce56023347bcf0c",
           "voting_power": "858415",
@@ -1334,6 +1326,12 @@
           "share": 8.3e-05
         },
         {
+          "val_id": "180",
+          "signer": "0x0b20bac4ae3628f184f363c82bf5d9e16ce771fa",
+          "voting_power": "297925",
+          "share": 7.8e-05
+        },
+        {
           "val_id": "120",
           "signer": "0xd9385758a71af0836467f9f6957f048048c41283",
           "voting_power": "292690",
@@ -1384,8 +1382,8 @@
         {
           "val_id": "182",
           "signer": "0xe4b9a891ee528ae8ad859a4d0d4d8ef8dda51105",
-          "voting_power": "91140",
-          "share": 2.4e-05
+          "voting_power": "93924",
+          "share": 2.5e-05
         },
         {
           "val_id": "157",
@@ -1431,9 +1429,9 @@
           "producer_count": 50
         },
         "current_span": {
-          "id": 15450,
-          "start_block": 97294656,
-          "end_block": 97301055,
+          "id": 15454,
+          "start_block": 97320256,
+          "end_block": 97326655,
           "producers": [
             {
               "val_id": "92",
@@ -1444,6 +1442,54 @@
           ]
         },
         "recent_spans": [
+          {
+            "id": 15454,
+            "start_block": 97320256,
+            "end_block": 97326655,
+            "producers": [
+              {
+                "val_id": "92",
+                "signer": "0x9aa1e7971a94cbc400d95e593e82fb6e79fc99d8",
+                "voting_power": "95389074"
+              }
+            ]
+          },
+          {
+            "id": 15453,
+            "start_block": 97313856,
+            "end_block": 97320255,
+            "producers": [
+              {
+                "val_id": "91",
+                "signer": "0xe8de70b95a4d105aff6584a722242726016956fe",
+                "voting_power": "83489003"
+              }
+            ]
+          },
+          {
+            "id": 15452,
+            "start_block": 97307456,
+            "end_block": 97313855,
+            "producers": [
+              {
+                "val_id": "94",
+                "signer": "0x264379c47e653dafa153841a995cf975b6a02ed7",
+                "voting_power": "93491837"
+              }
+            ]
+          },
+          {
+            "id": 15451,
+            "start_block": 97301056,
+            "end_block": 97307455,
+            "producers": [
+              {
+                "val_id": "93",
+                "signer": "0x233d596e31ed170da60209fe5701800c6b086cb7",
+                "voting_power": "80865107"
+              }
+            ]
+          },
           {
             "id": 15450,
             "start_block": 97294656,
@@ -1539,73 +1585,25 @@
                 "voting_power": "93491837"
               }
             ]
-          },
-          {
-            "id": 15442,
-            "start_block": 97249856,
-            "end_block": 97256255,
-            "producers": [
-              {
-                "val_id": "93",
-                "signer": "0x233d596e31ed170da60209fe5701800c6b086cb7",
-                "voting_power": "80865107"
-              }
-            ]
-          },
-          {
-            "id": 15441,
-            "start_block": 97243456,
-            "end_block": 97249855,
-            "producers": [
-              {
-                "val_id": "92",
-                "signer": "0x9aa1e7971a94cbc400d95e593e82fb6e79fc99d8",
-                "voting_power": "95389074"
-              }
-            ]
-          },
-          {
-            "id": 15440,
-            "start_block": 97237056,
-            "end_block": 97243455,
-            "producers": [
-              {
-                "val_id": "91",
-                "signer": "0xe8de70b95a4d105aff6584a722242726016956fe",
-                "voting_power": "83489003"
-              }
-            ]
-          },
-          {
-            "id": 15439,
-            "start_block": 97230656,
-            "end_block": 97237055,
-            "producers": [
-              {
-                "val_id": "94",
-                "signer": "0x264379c47e653dafa153841a995cf975b6a02ed7",
-                "voting_power": "93491837"
-              }
-            ]
           }
         ],
         "producer_set_limit": 4,
         "vote_tally_top": [
           {
             "val_id": "91",
-            "score": "380624390300"
+            "score": "380664372200"
           },
           {
             "val_id": "92",
-            "score": "376818146397"
+            "score": "376857728478"
           },
           {
             "val_id": "93",
-            "score": "373011902494"
+            "score": "373051084756"
           },
           {
             "val_id": "94",
-            "score": "369178339899"
+            "score": "369217122342"
           }
         ],
         "fallback_producers_client_constant": "91,92,93,94",
@@ -1617,7 +1615,7 @@
         },
         "block_coverage_n_50": 2,
         "bor_crosscheck": {
-          "bor_block": "97288816",
+          "bor_block": "97316559",
           "bor_getCurrentValidators": [
             {
               "signer": "0xe8de70b95a4d105aff6584a722242726016956fe",
@@ -1627,35 +1625,35 @@
         }
       },
       "weights_sorted_desc": [
-        "442973126",
+        "443533126",
         "403396326",
-        "365400258",
+        "365666476",
         "251121465",
         "207780686",
         "179030140",
-        "177022415",
+        "176942415",
         "176625341",
         "167092628",
-        "157728586",
-        "151415494",
+        "157729665",
+        "151637711",
         "114265133",
         "95389074",
         "93491837",
         "83489003",
         "80865107",
-        "74422571",
-        "73571102",
+        "74421113",
+        "73556402",
         "73556307",
         "65113499",
         "59167140",
-        "56600512",
-        "44598401",
+        "56612549",
+        "44600531",
         "21679808",
-        "15696331",
-        "10809233",
+        "15699580",
+        "10809278",
         "9777584",
-        "9090363",
-        "8990683",
+        "9091969",
+        "8991432",
         "8450015",
         "8309236",
         "7514077",
@@ -1671,7 +1669,7 @@
         "3442554",
         "3145170",
         "3119175",
-        "2835049",
+        "2858912",
         "2802034",
         "2781273",
         "2672290",
@@ -1700,7 +1698,6 @@
         "997292",
         "977634",
         "915788",
-        "897925",
         "858415",
         "820105",
         "793106",
@@ -1712,6 +1709,7 @@
         "440093",
         "423360",
         "315233",
+        "297925",
         "292690",
         "281636",
         "200563",
@@ -1720,7 +1718,7 @@
         "140228",
         "125955",
         "115715",
-        "91140",
+        "93924",
         "90138",
         "83884",
         "83621",
